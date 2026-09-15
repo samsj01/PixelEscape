@@ -10,8 +10,8 @@ namespace PixelEscape
     {
         static void Main(string[] args)
         {
-            Jugador escaper = new Jugador();
-            Console.WriteLine($"el jugador esta posicionado en {escaper.X},{escaper.Y}"); 
+            Jugador escapist = new Jugador();
+            Console.WriteLine($"el jugador esta posicionado en {escapist.X},{escapist.Y}"); 
         }
     }
 }
