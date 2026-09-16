@@ -25,11 +25,11 @@ namespace PixelEscape
         public double Velocidad
         {
             get { return velocidad; }
-            set 
-            { 
+            set
+            {
                 // Al ser el Cazador, debe tener una velocidad mayor a los enemigos básicos (mínimo 6.0)
                 if (value < 6.0) velocidad = 6.0;
-                else velocidad = value; 
+                else velocidad = value;
             }
         }
 
@@ -71,8 +71,8 @@ namespace PixelEscape
             if (objetivo == null) return false;
 
             // Calculamos la distancia usando posicionX y posicionY directamente
-            int deltaX = PosicionX - objetivo.PosicionActual.X;
-            int deltaY = PosicionY - objetivo.PosicionActual.Y;
+            int deltaX = PosicionX - objetivo.X;
+            int deltaY = PosicionY - objetivo.Y;
             double distancia = System.Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
 
             return distancia <= RangoDeteccion;
@@ -86,18 +86,18 @@ namespace PixelEscape
             if (Detectar(objetivo))
             {
                 // Acercamiento progresivo en el eje X
-                if (PosicionX < objetivo.PosicionActual.X)
+                if (PosicionX < objetivo.X)
                     PosicionX++;
-                else if (PosicionX > objetivo.PosicionActual.X)
+                else if (PosicionX > objetivo.X)
                     PosicionX--;
 
                 // Acercamiento progresivo en el eje Y
-                if (PosicionY < objetivo.PosicionActual.Y)
+                if (PosicionY < objetivo.Y)
                     PosicionY++;
-                else if (PosicionY > objetivo.PosicionActual.Y)
+                else if (PosicionY > objetivo.Y)
                     PosicionY--;
 
-                return $"¡Cazador detectó a {objetivo.Nombre}! Persiguiendo hasta ({PosicionX}, {PosicionY}).";
+                return $"¡Cazador detectó a {objetivo}! Persiguiendo hasta ({PosicionX}, {PosicionY}).";
             }
 
             return "Jugador fuera del rango de detección.";
@@ -109,7 +109,7 @@ namespace PixelEscape
             if (objetivo == null) return false;
 
             // Verifica si el cazador y el jugador coinciden en la misma posición (X, Y)
-            if (PosicionX == objetivo.PosicionActual.X && PosicionY == objetivo.PosicionActual.Y)
+            if (PosicionX == objetivo.X && PosicionY == objetivo.Y)
             {
                 objetivo.PerderVida(Dano); // Causa daño al jugador a través de su método
                 return true;
