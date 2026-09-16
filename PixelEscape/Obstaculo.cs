@@ -2,7 +2,7 @@ using System;
 
 namespace PixelEscape
 {
-    public class Obstaculo
+    internal class Obstaculo
     {
         // Atributos privados
         private int posicionX;

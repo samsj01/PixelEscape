@@ -17,10 +17,11 @@ namespace PixelEscape
         const int GRAVEDAD = -1; // nuevo
         const int FUERZASALTO = 3; // nuevo 
         const int SUELO = 0; // nuevo
+        bool estaVivo;
 
         public int X { get => x; }
         public int Y { get => y; }
-        public int Vida { get => vida; }
+        public int Vida { get => vida; set => vida = value; }
         public int Velocidad { get => velocidad; }
 
         public bool EnElSuelo { get; private set; } = true;
@@ -33,6 +34,7 @@ namespace PixelEscape
             this.vida = 3;
             this.Puntaje = 0;
             this.velocidad = 2;
+            this.estaVivo = true;
         }
 
         public void Moverse(ConsoleKey tecla, Moneda moneda1, Llave llave1)
@@ -124,6 +126,28 @@ namespace PixelEscape
 
         public void RecogerPW()
         {
+
+        }
+
+        public void PerderVida(CazadorPixel cazador, 
+            GuardianPixel guardian, Trampa trampa)
+        {
+           if((cazador.PosicionX == this.X) && this.Vida >0)
+           {
+                
+                Console.WriteLine($"Te quedan {this.Vida} vidas");
+           }
+           if ((trampa.PosicionX == this.X ) && this.Vida > 0)
+           {
+                this.Vida -= trampa.CausarDano();
+                Console.WriteLine($"Te quedan {this.Vida} vidas");
+            }
+           if ((guardian.X == this.X) && this.Vida > 0)
+           {
+                this.Vida -= guardian.Atacar(this);
+                Console.WriteLine($"Te quedan {this.Vida} vidas");
+           }
+
 
         }
     }

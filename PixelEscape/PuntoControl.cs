@@ -4,7 +4,7 @@ namespace PixelEscape
 {
     
 
-    public class PuntoControl
+    internal class PuntoControl
     {
         // Atributos privados
         private int posicionX;
@@ -75,7 +75,7 @@ namespace PixelEscape
         }
 
         // Activa el punto de control
-        public bool Activar()
+        public bool Activar(Jugador escapist)
         {
             Activo = true;
             return Activo;

@@ -11,6 +11,9 @@ namespace PixelEscape
     {
         static void Main(string[] args)
         {
+            Trampa trampita = new Trampa(17,0,1);
+            Power_up pw = new Power_up(3,0,10,"Escudo");
+            GuardianPixel enemigo1 = new GuardianPixel();
             Llave llave1 = new Llave(20,0);
             Jugador escapist = new Jugador();
             Moneda moneda1 = new Moneda();
@@ -32,6 +35,12 @@ namespace PixelEscape
                 }
                 escapist.AplicarFisica();
                 Thread.Sleep(150);
+            }
+            Console.Clear();
+            Console.WriteLine("GuardianPixel Patrullando");
+            while (true)
+            {
+                enemigo1.Patrullar();
             }
 
         }
