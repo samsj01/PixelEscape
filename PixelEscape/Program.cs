@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PixelEscape
@@ -16,15 +17,22 @@ namespace PixelEscape
 
             while (true)
             {
-                ConsoleKeyInfo teclaInfo = Console.ReadKey(intercept: true);
-
-                if (teclaInfo.Key == ConsoleKey.Escape)
+                // Lectura de teclado no bloqueante para mantener la física corriendo
+                if (Console.KeyAvailable)
                 {
-                    break;
+                    ConsoleKeyInfo teclaInfo = Console.ReadKey(intercept: true);
+
+                    if (teclaInfo.Key == ConsoleKey.Escape)
+                        break;
+
+                    escapist.Moverse(teclaInfo.Key);
                 }
 
-                escapist.Moverse(teclaInfo.Key);
-                
+                // Actualizar la física en cada iteración
+                escapist.AplicarFisica();
+
+                // Pausa corta (FPS/ritmo del juego)
+                Thread.Sleep(150);
             }
 
         }

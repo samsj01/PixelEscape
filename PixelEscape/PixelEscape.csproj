@@ -46,8 +46,11 @@
     <Compile Include="CazadorPixel.cs" />
     <Compile Include="GuardianPixel.cs" />
     <Compile Include="Jugador.cs" />
+    <Compile Include="Obstaculo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuntoControl.cs" />
+    <Compile Include="Trampa.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

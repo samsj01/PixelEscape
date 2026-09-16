@@ -24,7 +24,7 @@ namespace PixelEscape
         public int Puntaje { get => puntaje;}
         public int Velocidad { get => velocidad; }
 
-        public bool EnElSuelo { get; } = true;
+        public bool EnElSuelo { get; private set; } = true;
 
         public Jugador()
         {
@@ -59,7 +59,32 @@ namespace PixelEscape
         {
             if (EnElSuelo)
             {
-                
+                this.velY = FUERZASALTO;
+                EnElSuelo = false;
+                Console.WriteLine($"{this.x},{this.y}");
+
+            }
+        }
+        public void AplicarFisica()
+        {
+            // Si el personaje está en el aire, aplicamos movimiento y gravedad
+            if (!EnElSuelo)
+            {
+                y += velY;          // Aplica el movimiento según la velocidad actual
+                velY += GRAVEDAD;   // La gravedad reduce la velocidad hacia arriba o acelera la caída
+
+                // Colisión con el suelo
+                if (Y <= SUELO)
+                {
+                    y = SUELO;
+                    velY = 0;
+                    EnElSuelo = true;
+                    Console.WriteLine($"(Aterrizaje) Posición: ({X}, {Y})");
+                }
+                else
+                {
+                    Console.WriteLine($"(En Aire) Posición: ({X}, {Y})");
+                }
             }
         }
     }
