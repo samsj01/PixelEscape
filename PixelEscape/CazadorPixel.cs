@@ -8,5 +8,10 @@ namespace PixelEscape
 {
     internal class CazadorPixel
     {
+        int x;
+        int y;
+        int vel;
+        int daño;
+        int rangoDetect;
     }
 }

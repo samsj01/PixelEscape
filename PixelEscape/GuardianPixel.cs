@@ -8,5 +8,10 @@ namespace PixelEscape
 {
     internal class GuardianPixel
     {
+        int x;
+        int y;
+        int vel;
+        int daño;
+        string direccion;
     }
 }
