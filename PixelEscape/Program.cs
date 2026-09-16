@@ -11,12 +11,12 @@ namespace PixelEscape
     {
         static void Main(string[] args)
         {
+            Llave llave1 = new Llave(20,0);
             Jugador escapist = new Jugador();
             Moneda moneda1 = new Moneda();
             Console.WriteLine($"el jugador esta posicionado en {escapist.X},{escapist.Y}");
             Console.WriteLine("Controles: A (Izquierda), D (Derecha), " +
                 "W (Saltar), ESC (Salir)\n");
-            Console.WriteLine($"moneda en x  es {moneda1.X}");
 
             while (true)
             {
@@ -28,7 +28,7 @@ namespace PixelEscape
                     if (teclaInfo.Key == ConsoleKey.Escape)
                         break;
 
-                    escapist.Moverse(teclaInfo.Key, moneda1);
+                    escapist.Moverse(teclaInfo.Key, moneda1, llave1);
                 }
                 escapist.AplicarFisica();
                 Thread.Sleep(150);

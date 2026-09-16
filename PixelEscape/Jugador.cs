@@ -35,7 +35,7 @@ namespace PixelEscape
             this.velocidad = 2;
         }
 
-        public void Moverse(ConsoleKey tecla, Moneda moneda1)
+        public void Moverse(ConsoleKey tecla, Moneda moneda1, Llave llave1)
         {
             switch (tecla)
             {
@@ -44,7 +44,7 @@ namespace PixelEscape
                     {
                         this.x--;
                         Console.WriteLine($"{this.x},{this.y}");
-                        RecogerObjetos(moneda1);
+                        RecogerObjetos(moneda1,llave1);
                     }
                     break;
                 case ConsoleKey.D:
@@ -52,7 +52,7 @@ namespace PixelEscape
                     {
                         this.x++;
                         Console.WriteLine($"{this.x},{this.y}");
-                        RecogerObjetos(moneda1);
+                        RecogerObjetos(moneda1,llave1);
                     }
                     break;
                 case ConsoleKey.W:
@@ -102,14 +102,24 @@ namespace PixelEscape
             Console.WriteLine("ATAQUE");
         }
 
-        public void RecogerObjetos(Moneda moneda1)
+        public void RecogerObjetos(Moneda moneda1, Llave llave1)
         {
+            
             if (this.x == moneda1.X)
             {
                 Console.WriteLine("Recogiste una moneda");
                 moneda1.Recogida = true;
                 moneda1.SerRecogida(this);
             }
+            if (!llave1.Recogida)
+            {
+                if (llave1.X == this.X)
+                {
+                    Console.WriteLine("Se ha hagarrado la llave");
+                    llave1.Recoger(this);
+                }
+            }
+            
         }
     }
 }
