@@ -13,6 +13,20 @@ namespace PixelEscape
             Jugador escapist = new Jugador();
             Console.WriteLine($"el jugador esta posicionado en {escapist.X},{escapist.Y}");
             Console.WriteLine($"El jugador tiene {escapist.Vida} vidas");
+
+            while (true)
+            {
+                ConsoleKeyInfo teclaInfo = Console.ReadKey(intercept: true);
+
+                if (teclaInfo.Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+
+                escapist.Moverse(teclaInfo.Key);
+                
+            }
+
         }
     }
 }
