@@ -13,42 +13,53 @@ namespace PixelEscape
         int vida;
         int puntaje;
         int velocidad;
-        int  velY = 0; // nuevo
+        int velY = 0; // nuevo
         const int GRAVEDAD = -1; // nuevo
         const int FUERZASALTO = 3; // nuevo 
-        const int SUELO = 0;
+        const int SUELO = 0; // nuevo
 
-        public int X { get => x;}
-        public int Y { get => y;}
-        public int Vida { get => vida;}
-        public int Puntaje { get => puntaje;}
+        public int X { get => x; }
+        public int Y { get => y; }
+        public int Vida { get => vida; }
         public int Velocidad { get => velocidad; }
 
         public bool EnElSuelo { get; private set; } = true;
+        public int Puntaje { get => puntaje; set => puntaje = value; }
 
         public Jugador()
         {
             this.x = 0;
             this.y = 0;
             this.vida = 3;
-            this.puntaje = 0;
-            this.velocidad = 1;
+            this.Puntaje = 0;
+            this.velocidad = 2;
         }
 
-        public void Moverse(ConsoleKey tecla) 
+        public void Moverse(ConsoleKey tecla, Moneda moneda1)
         {
             switch (tecla)
             {
                 case ConsoleKey.A:
-                    this.x = this.x - 1 - this.velocidad;
-                    Console.WriteLine($"{this.x},{this.y}");
+                    for (int i = 0; i < this.velocidad; i++)
+                    {
+                        this.x--;
+                        Console.WriteLine($"{this.x},{this.y}");
+                        RecogerObjetos(moneda1);
+                    }
                     break;
                 case ConsoleKey.D:
-                    this.x = this.x + 1 + this.velocidad;
-                    Console.WriteLine($"{this.x},{this.y}");
+                    for (int i = 0; i < this.velocidad; i++)
+                    {
+                        this.x++;
+                        Console.WriteLine($"{this.x},{this.y}");
+                        RecogerObjetos(moneda1);
+                    }
                     break;
                 case ConsoleKey.W:
                     Saltar(tecla);
+                    break;
+                case ConsoleKey.Spacebar:
+                    Atacar();
                     break;
                 default:
                     break;
@@ -67,13 +78,11 @@ namespace PixelEscape
         }
         public void AplicarFisica()
         {
-            // Si el personaje está en el aire, aplicamos movimiento y gravedad
             if (!EnElSuelo)
             {
-                y += velY;          // Aplica el movimiento según la velocidad actual
-                velY += GRAVEDAD;   // La gravedad reduce la velocidad hacia arriba o acelera la caída
+                y += velY;
+                velY += GRAVEDAD;
 
-                // Colisión con el suelo
                 if (Y <= SUELO)
                 {
                     y = SUELO;
@@ -85,6 +94,21 @@ namespace PixelEscape
                 {
                     Console.WriteLine($"(En Aire) Posición: ({X}, {Y})");
                 }
+            }
+        }
+
+        public void Atacar()
+        {
+            Console.WriteLine("ATAQUE");
+        }
+
+        public void RecogerObjetos(Moneda moneda1)
+        {
+            if (this.x == moneda1.X)
+            {
+                Console.WriteLine("Recogiste una moneda");
+                moneda1.Recogida = true;
+                moneda1.SerRecogida(this);
             }
         }
     }
