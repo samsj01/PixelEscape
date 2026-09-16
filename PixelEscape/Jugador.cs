@@ -13,12 +13,18 @@ namespace PixelEscape
         int vida;
         int puntaje;
         int velocidad;
+        int  velY = 0; // nuevo
+        const int GRAVEDAD = -1; // nuevo
+        const int FUERZASALTO = 3; // nuevo 
+        const int SUELO = 0;
 
         public int X { get => x;}
         public int Y { get => y;}
         public int Vida { get => vida;}
         public int Puntaje { get => puntaje;}
         public int Velocidad { get => velocidad; }
+
+        public bool EnElSuelo { get; } = true;
 
         public Jugador()
         {
@@ -41,8 +47,19 @@ namespace PixelEscape
                     this.x = this.x + 1 + this.velocidad;
                     Console.WriteLine($"{this.x},{this.y}");
                     break;
+                case ConsoleKey.W:
+                    Saltar(tecla);
+                    break;
                 default:
                     break;
+            }
+        }
+
+        public void Saltar(ConsoleKey tecla)
+        {
+            if (EnElSuelo)
+            {
+                
             }
         }
     }
