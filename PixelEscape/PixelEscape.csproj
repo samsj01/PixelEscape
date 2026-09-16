@@ -47,6 +47,7 @@
     <Compile Include="GuardianPixel.cs" />
     <Compile Include="Jugador.cs" />
     <Compile Include="Llave.cs" />
+    <Compile Include="Moneda.cs" />
     <Compile Include="Obstaculo.cs" />
     <Compile Include="Power_up.cs" />
     <Compile Include="Program.cs" />
