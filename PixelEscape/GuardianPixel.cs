@@ -12,6 +12,29 @@ namespace PixelEscape
         int y;
         int vel;
         int daño;
-        string direccion;
+        bool direccion;
+
+        public int X { get => x;}
+        public int Y { get => y;}
+        public int Vel { get => vel;}
+        public int Daño { get => daño; }
+        public bool Direccion { get; set; } = false;
+
+        public GuardianPixel()
+        {
+            this.x = 0;
+            this.y = 0;
+            this.vel = 1;
+            this.daño = 1;
+        }
+        public void Moverse()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                this.x = this.x + 1 * vel;
+                Console.WriteLine($"{this.x},{this.y}");
+
+            }
+        }
     }
 }

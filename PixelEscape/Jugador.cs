@@ -43,7 +43,7 @@ namespace PixelEscape
                     for (int i = 0; i < this.velocidad; i++)
                     {
                         this.x--;
-                        Console.WriteLine($"{this.x},{this.y}");
+                        Console.Write($"{this.x},{this.y} ");
                         RecogerObjetos(moneda1,llave1);
                     }
                     break;
@@ -51,7 +51,7 @@ namespace PixelEscape
                     for (int i = 0; i < this.velocidad; i++)
                     {
                         this.x++;
-                        Console.WriteLine($"{this.x},{this.y}");
+                        Console.Write($"{this.x},{this.y} ");
                         RecogerObjetos(moneda1,llave1);
                     }
                     break;
@@ -107,7 +107,7 @@ namespace PixelEscape
             
             if (this.x == moneda1.X)
             {
-                Console.WriteLine("Recogiste una moneda");
+                Console.WriteLine("\nRecogiste una moneda");
                 moneda1.Recogida = true;
                 moneda1.SerRecogida(this);
             }
@@ -115,11 +115,16 @@ namespace PixelEscape
             {
                 if (llave1.X == this.X)
                 {
-                    Console.WriteLine("Se ha hagarrado la llave");
+                    Console.WriteLine("\nSe ha hagarrado la llave");
                     llave1.Recoger(this);
                 }
             }
             
+        }
+
+        public void RecogerPW()
+        {
+
         }
     }
 }
