@@ -37,7 +37,8 @@ namespace PixelEscape
             this.estaVivo = true;
         }
 
-        public void Moverse(ConsoleKey tecla, Moneda moneda1, Llave llave1)
+        public void Moverse(ConsoleKey tecla, Moneda moneda1, Llave llave1,
+            CazadorPixel cazador, GuardianPixel guardian, Trampa trampita)
         {
             switch (tecla)
             {
@@ -47,6 +48,7 @@ namespace PixelEscape
                         this.x--;
                         Console.Write($"{this.x},{this.y} ");
                         RecogerObjetos(moneda1,llave1);
+                        PerderVida(cazador, guardian, trampita);
                     }
                     break;
                 case ConsoleKey.D:
@@ -55,6 +57,7 @@ namespace PixelEscape
                         this.x++;
                         Console.Write($"{this.x},{this.y} ");
                         RecogerObjetos(moneda1,llave1);
+                        PerderVida(cazador, guardian, trampita);
                     }
                     break;
                 case ConsoleKey.W:
@@ -134,21 +137,40 @@ namespace PixelEscape
         {
            if((cazador.PosicionX == this.X) && this.Vida >0)
            {
-                
+                this.Vida -= cazador.Atacar(this);
                 Console.WriteLine($"Te quedan {this.Vida} vidas");
-           }
-           if ((trampa.PosicionX == this.X ) && this.Vida > 0)
-           {
+           }else
+            {
+                Muerte();
+            }
+
+            if ((trampa.PosicionX == this.X) && this.Vida > 0)
+            {
                 this.Vida -= trampa.CausarDano();
                 Console.WriteLine($"Te quedan {this.Vida} vidas");
             }
-           if ((guardian.X == this.X) && this.Vida > 0)
-           {
+            else
+            {
+                Muerte();
+            }
+            if ((guardian.X == this.X) && this.Vida > 0)
+            {
                 this.Vida -= guardian.Atacar(this);
                 Console.WriteLine($"Te quedan {this.Vida} vidas");
-           }
-
-
+            }
+            else
+            {
+                Muerte();
+            }
+        }
+        public void Muerte()
+        {
+            if(this.Vida == 0)
+            {
+                Console.WriteLine("Estas Muerto");
+                this.estaVivo = false;
+            }
+            
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace PixelEscape
 {
-    public class CazadorPixel
+    internal class CazadorPixel
     {
         // 1. Atributos privados (Encapsulamiento estricto)
         private int posicionX;
@@ -23,6 +23,11 @@ namespace PixelEscape
             this.velocidad = 3;
             this.dano = 1;
             this.rangoDeteccion = 2;
+        }
+
+        public int Atacar(Jugador escapist)
+        {
+            return dano;
         }
     }
 }
