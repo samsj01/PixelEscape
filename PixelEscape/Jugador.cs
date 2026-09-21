@@ -13,7 +13,7 @@ namespace PixelEscape
         int vida;
         int puntaje;
         int velocidad;
-        int velY = 0; // nuevo
+        int velY = 1; // nuevo
         const int GRAVEDAD = 1; // nuevo
         const int FUERZASALTO = 3; // nuevo 
         const int SUELO = 0; // nuevo
@@ -27,6 +27,8 @@ namespace PixelEscape
         public bool EnElSuelo { get; private set; } = true;
         public int Puntaje { get => puntaje; set => puntaje = value; }
         public int VelY { get => velY; set => velY = value; }
+
+        public int FUERZASALTO1 { get => FUERZASALTO; }
 
         public Jugador()
         {
@@ -48,18 +50,22 @@ namespace PixelEscape
         {
             if (EnElSuelo)
             {
-                this.Y += FUERZASALTO * VelY;
+                this.Y += FUERZASALTO1 * VelY;
                 EnElSuelo = false;
             }
         } 
 
-        public void aterrizar()
+        public void Aterrizar()
         {
             if (!EnElSuelo)
             {
-                this.Y -= this.VelY;
-                this.VelY -= GRAVEDAD;
+                this.Y -= this.VelY * GRAVEDAD;
+                if(this.Y == SUELO)
+                {
+                    EnElSuelo = true;
+                }
             }
+            
         }
         public void RecibirDano(int dano)
         {

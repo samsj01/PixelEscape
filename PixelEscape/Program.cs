@@ -27,6 +27,22 @@ namespace PixelEscape
             escapist.RecibirDano(cazador.Atacar(escapist));
             Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
 
+            // Salto
+            escapist.Saltar();
+            Console.WriteLine("Salto");
+            Console.WriteLine($"x,y: {escapist.X},{escapist.Y}");
+            Console.WriteLine($"En el suelo: {escapist.EnElSuelo}");
+
+            //Aterrizaje
+            Console.WriteLine("Aterrizando");
+            for(int i = 0; i < escapist.FUERZASALTO1; i++)
+            {
+                escapist.Aterrizar();
+                Console.WriteLine($"x,y: {escapist.X},{escapist.Y}");
+            }
+
+            Console.WriteLine($"En el suelo: {escapist.EnElSuelo}");
+
 
         }
     }
