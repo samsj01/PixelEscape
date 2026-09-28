@@ -43,6 +43,19 @@ namespace PixelEscape
 
             Console.WriteLine($"En el suelo: {escapist.EnElSuelo}");
 
+            GuardianPixel guardian = new GuardianPixel();
+            guardian.Patrullar();
+            Console.WriteLine($"Posición del guardián: {guardian.X},{guardian.Y}");
+            guardian.Patrullar();
+            Console.WriteLine($"Posición del guardián: {guardian.X},{guardian.Y}");
+            escapist.RecibirDano(guardian.Atacar(escapist));
+            Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
+            Console.WriteLine($"El jugador esta vivo?: {escapist.EstaMuerto()}");
+            escapist.RecibirDano(guardian.Atacar(escapist));
+            Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
+            Console.WriteLine($"El jugador esta vivo?: {escapist.EstaMuerto()}");
+
+
 
         }
     }

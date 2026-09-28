@@ -13,13 +13,13 @@ namespace PixelEscape
         int y;
         int vel;
         int daño;
-        bool direccion;
+        bool direccion = false;
 
-        public int X { get => x;}
+        public int X { get => x; private set => x = value; }
         public int Y { get => y;}
         public int Vel { get => vel;}
         public int Daño { get => daño; }
-        public bool Direccion { get; set; } = false;
+        public bool Direccion { get => direccion; private set => direccion = value;}
 
         public GuardianPixel()
         {
@@ -30,28 +30,22 @@ namespace PixelEscape
         }
         public void Patrullar()
         {
-            for (int i = 0; i < 6; i++)
+            if(!Direccion)
             {
-                this.x = this.x + 1 * vel;
-                Console.Write($"{this.x},{this.y} ");
+                //camina de izquierda a derecha
+                this.X = this.X + 4 * vel;
                 Direccion = true;
-                Thread.Sleep(150);
-            }
-            Console.WriteLine("\n");
-            for (int i = 0; i < 6; i++)
+            } else
             {
-                this.x = this.x - 1 * vel;
-                Console.Write($"{this.x},{this.y} ");
+                //camina de derecha a izquierda
+                this.X = this.X - 4 * vel;
                 Direccion = false;
-                Thread.Sleep(150);
             }
-            Console.WriteLine("\n");
         }
 
         public int Atacar(Jugador escapist)
         {
-            Console.WriteLine("ATAQUE");
-            return daño;
+            return Daño;
         }
     }
 }

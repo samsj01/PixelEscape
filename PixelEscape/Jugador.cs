@@ -29,6 +29,7 @@ namespace PixelEscape
         public int VelY { get => velY; set => velY = value; }
 
         public int FUERZASALTO1 { get => FUERZASALTO; }
+        public bool EstaVivo { get => estaVivo; set => estaVivo = value; }
 
         public Jugador()
         {
@@ -37,7 +38,7 @@ namespace PixelEscape
             this.vida = 3;
             this.Puntaje = 0;
             this.velocidad = 2;
-            this.estaVivo = true;
+            this.EstaVivo = true;
         }
 
         public bool MoverHorizontal(int pasos)
@@ -73,6 +74,21 @@ namespace PixelEscape
             if(this.Vida < 0)
             {
                 this.Vida = 0;
+            }
+            EstaMuerto();
+        }
+
+        public bool EstaMuerto() 
+        {
+            if (this.Vida <= 0) 
+            { 
+                EstaVivo = false;
+                return EstaVivo;
+            }
+            else
+            {
+                EstaVivo = true;
+                return EstaVivo;
             }
         }
 
