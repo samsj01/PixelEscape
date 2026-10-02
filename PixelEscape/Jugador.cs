@@ -80,16 +80,13 @@ namespace PixelEscape
 
         public bool EstaMuerto() 
         {
-            if (this.Vida <= 0) 
-            { 
+            if (this.Vida <= 0)
+            {
                 EstaVivo = false;
                 return EstaVivo;
             }
-            else
-            {
-                EstaVivo = true;
-                return EstaVivo;
-            }
+            EstaVivo = true;
+            return EstaVivo;
         }
 
         

@@ -28,19 +28,33 @@ namespace PixelEscape
             this.vel = 1;
             this.daño = 1;
         }
-        public void Patrullar()
+        public bool Patrullar(int pasos)
         {
-            if(!Direccion)
+            if(pasos >= 0)
             {
-                //camina de izquierda a derecha
-                this.X = this.X + 4 * vel;
-                Direccion = true;
-            } else
-            {
-                //camina de derecha a izquierda
-                this.X = this.X - 4 * vel;
-                Direccion = false;
+                if (!Direccion)
+                {
+                    for (int i = 0; i < pasos; i++)
+                    {
+                        //camina de izquierda a derecha
+                        this.X = this.X + 1 * vel;
+                    }
+                    Direccion = true;
+
+
+                }
+                else
+                {
+                    for (int i = 0; i < pasos; i++)
+                    {
+                        //camina de derecha a izquierda
+                        this.X = this.X - 1 * vel;
+                    }
+                    Direccion = false;
+                }
+                return true;
             }
+            return false;
         }
 
         public int Atacar(Jugador escapist)

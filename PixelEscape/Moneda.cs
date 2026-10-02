@@ -30,7 +30,6 @@ namespace PixelEscape
             if (Recogida)
             {
                 jugador.Puntaje += this.valor;
-                Console.WriteLine($"Puntaje Nuevo : {jugador.Puntaje}");
                 this.x = rd.Next(0, 15);
             }
             this.Recogida = false;
