@@ -10,8 +10,7 @@ namespace PixelEscape
     {
         int x;
         int y;
-        int valor;
-        bool recogida; // nuevo
+        int valor; // nuevo
         public int X { get => x; }
         public int Y { get => x; }
         public int Valor { get => valor; }
@@ -25,14 +24,17 @@ namespace PixelEscape
             this.valor = 100;
         }
 
-        public void SerRecogida(Jugador jugador)
+        public bool SerRecogida(Jugador jugador)
         {
-            if (Recogida)
+            if (!Recogida)
             {
                 jugador.Puntaje += this.valor;
                 this.x = rd.Next(0, 15);
+                this.Recogida = true;
+                return Recogida;
             }
             this.Recogida = false;
+            return Recogida;
         }
 
 

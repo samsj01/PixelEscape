@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="CazadorPixel.cs" />
     <Compile Include="GuardianPixel.cs" />
-    <Compile Include="Jugador.cs" />
+    <Compile Include="Personaje.cs" />
     <Compile Include="Llave.cs" />
     <Compile Include="Moneda.cs" />
     <Compile Include="Obstaculo.cs" />

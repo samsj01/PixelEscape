@@ -26,7 +26,7 @@ namespace PixelEscape
             this.RangoDeteccion = 2;
         }
 
-        public int Atacar(Jugador escapist)
+        public int Atacar(Personaje escapist)
         {
             return dano;
         }

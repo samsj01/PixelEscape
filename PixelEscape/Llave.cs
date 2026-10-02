@@ -54,7 +54,7 @@ namespace PixelEscape
         }
 
         //Recoger la llave
-        public void Recoger(Jugador escapist)
+        public void Recoger(Personaje escapist)
         {
             this.estado = true;
         }

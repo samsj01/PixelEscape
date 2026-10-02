@@ -97,7 +97,7 @@ namespace PixelEscape
         }
 
         // Activa la trampa
-        public void Activar(Jugador escapist)
+        public void Activar(Personaje escapist)
         {
             if (escapist.X == this.posicionX)
             {

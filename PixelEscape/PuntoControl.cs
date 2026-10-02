@@ -75,7 +75,7 @@ namespace PixelEscape
         }
 
         // Activa el punto de control
-        public bool Activar(Jugador escapist)
+        public bool Activar(Personaje escapist)
         {
             Activo = true;
             return Activo;

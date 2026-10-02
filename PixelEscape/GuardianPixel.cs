@@ -57,7 +57,7 @@ namespace PixelEscape
             return false;
         }
 
-        public int Atacar(Jugador escapist)
+        public int Atacar(Personaje escapist)
         {
             return Daño;
         }

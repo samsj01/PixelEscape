@@ -14,11 +14,11 @@ namespace PixelEscape
             Jugador escapist = new Jugador();
             
             // posición Predefinida.
-            Console.WriteLine($"x,y: {escapist.X},{escapist.Y}");
+            Console.WriteLine($"posición: {escapist.MostrarPosicion()}");
             //Mover 5 pasos a la izquierda.
             escapist.MoverHorizontal(-5);
             //nueva posición.
-            Console.WriteLine($"x,y: {escapist.X},{escapist.Y}");
+            Console.WriteLine($"posición: {escapist.MostrarPosicion()}");
             
             //Se crea cazador
             CazadorPixel cazador = new CazadorPixel();
