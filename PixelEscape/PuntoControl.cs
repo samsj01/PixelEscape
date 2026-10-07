@@ -4,7 +4,7 @@ namespace PixelEscape
 {
     
 
-    internal class PuntoControl
+    internal class PuntoControl : ObjetoInteractivo
     {
         // Atributos privados
         private int posicionX;
@@ -75,7 +75,7 @@ namespace PixelEscape
         }
 
         // Activa el punto de control
-        public bool Activar(Personaje escapist)
+        public override bool Activar(Personaje escapist)
         {
             Activo = true;
             return Activo;

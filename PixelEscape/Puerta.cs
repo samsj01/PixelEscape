@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace PixelEscape
 {
-    internal class Puerta
+    internal class Puerta : ObjetoInteractivo
     {
         //Atributos
-
-        private int posicionX;
-        private int posicionY;
         private bool estadoPuerta;
 
         //Constructores
@@ -22,7 +19,7 @@ namespace PixelEscape
             this.estadoPuerta = false;
         }
 
-        //gat y set
+        //get y set
         public int X { get { return posicionX; } set { posicionX = value; } }
         public int Y { get { return posicionY; } set { posicionY = value; } }
         public bool EstadoPuerta { get => estadoPuerta; set => estadoPuerta = value; }

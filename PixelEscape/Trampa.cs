@@ -3,7 +3,7 @@ namespace PixelEscape
 {
 
 
-    internal class Trampa
+    internal class Trampa : ObjetoActivable
     {
         // Atributos privados
         private int posicionX;
@@ -96,13 +96,16 @@ namespace PixelEscape
             Activa = false;
         }
 
-        // Activa la trampa
-        public void Activar(Personaje escapist)
+       // Trampa Activa
+        public override bool Activar(Personaje escapista)
         {
-            if (escapist.X == this.posicionX)
+            if (escapista.X == this.posicionX)
             {
                 Activa = true;
             }
+
+            return Activa;
+    
         }
 
         // Retorna el daño que causa la trampa
