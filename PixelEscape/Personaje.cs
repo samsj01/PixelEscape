@@ -15,6 +15,7 @@ namespace PixelEscape
         bool estaVivo;
         protected int dano;
         string direccion;
+        bool colision;
 
 
         public int X { get => x; protected set => x = value; }
@@ -23,6 +24,7 @@ namespace PixelEscape
         public int Velocidad { get => velocidad; protected set => velocidad = value; }
         public bool EstaVivo { get => estaVivo; set => estaVivo = value; }
         public string Direccion { get => direccion; set => direccion = value; }
+        public bool Colision { get => colision; set => colision = value; }
 
         public Personaje()
         {
@@ -76,104 +78,17 @@ namespace PixelEscape
             return EstaVivo;
         }
 
-        protected virtual void Collisionar()
-        {
-
-        }
 
         public virtual int Atacar(Personaje objetivo)
         {
-            return 0;
-        }
-
-
-    }
-    internal class Jugador : Personaje
-    {
-        int puntaje;
-        int velY = 1; // nuevo
-        const int GRAVEDAD = 1; // nuevo
-        const int FUERZASALTO = 3; // nuevo 
-        const int SUELO = 0; // nuevo
-
-        public bool EnElSuelo { get; private set; } = true;
-        public int Puntaje { get => puntaje; set => puntaje = value; }
-        public int VelY { get => velY; set => velY = value; }
-
-        public int FUERZASALTO1 { get => FUERZASALTO; }
-
-        public Jugador() : base()
-        {
-            this.X = 0;
-            this.Y = 0;
-            this.Vida = 3;
-            this.Puntaje = 0;
-            this.dano = 1;
-        }
-        public void Saltar()
-        {
-            if (EnElSuelo)
-            {
-                this.Y += FUERZASALTO1 * VelY;
-                EnElSuelo = false;
-            }
-        }
-        public void Aterrizar()
-        {
-            if (!EnElSuelo)
-            {
-                this.Y -= this.VelY * GRAVEDAD;
-                if (this.Y == SUELO)
-                {
-                    EnElSuelo = true;
-                }
-            }
-
-        }
-    } 
-    
-    internal class CazadorPixel : Personaje
-    {
-        double rangoDeteccion;
-        public double RangoDeteccion { get => rangoDeteccion; 
-            private set => rangoDeteccion = value; }
-        public CazadorPixel() : base()
-        {
-            this.X = 30;
-            this.Y = 0;
-            this.Velocidad = 3;
-            this.dano = 1;
-            this.RangoDeteccion = 50;
-        }
-
-        bool CalcularDistancia(Personaje objetivo) 
-        {
-            double deltaX = this.X - objetivo.X;
-            double deltaY = this.Y - objetivo.Y;
-            double distancia = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
-
-            return distancia <= RangoDeteccion;
-        }
-
-        public override int Atacar(Personaje objetivo)
-        {
-            if (CalcularDistancia(objetivo))
-            {
+            if (Colision) 
+            { 
                 objetivo.RecibirDano(this.dano);
-                return dano;
             }
+            Colision = false;
             return 0;
         }
-    }
-    internal class GuardianPixel : Personaje 
-    {
-        public GuardianPixel() : base()
-        {
-            this.X = 50;
-            this.Y = 0;
-            this.Velocidad = 1;
-            this.dano = 1;
-        }
+
 
     }
 }
