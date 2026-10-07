@@ -14,8 +14,8 @@ namespace PixelEscape
         //Constructores
         public Puerta(int posicionX, int posicionY)
         {
-            this.posicionX = posicionX;
-            this.posicionY = posicionY;
+            PosicionX = posicionX;
+            PosicionY = posicionY;
             this.estadoPuerta = false;
         }
 
@@ -23,33 +23,6 @@ namespace PixelEscape
         public int X { get { return posicionX; } set { posicionX = value; } }
         public int Y { get { return posicionY; } set { posicionY = value; } }
         public bool EstadoPuerta { get => estadoPuerta; set => estadoPuerta = value; }
-
-        public int PosicionX
-        {
-            get { return posicionX; }
-            set
-            {
-                if (value >= 0)
-                {
-                    posicionX = value;
-                }
-            }
-        }
-
-        public int PosicionY
-        {
-            get { return posicionY; }
-            set
-            {
-                if (value >= 0)
-                {
-                    posicionY = value;
-                }
-            }
-        }
-
-
-
 
         //Métodos
 

@@ -6,52 +6,8 @@ namespace PixelEscape
     internal class Trampa : ObjetoActivable
     {
         // Atributos privados
-        private int posicionX;
-        private int posicionY;
         private int dano;
         private bool activa;
-
-        // Propiedad para la posición X
-        public int PosicionX
-        {
-            get
-            {
-                return posicionX;
-            }
-            private set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(
-                        nameof(PosicionX),
-                        "La posición X no puede ser negativa."
-                    );
-                }
-
-                posicionX = value;
-            }
-        }
-
-        // Propiedad para la posición Y
-        public int PosicionY
-        {
-            get
-            {
-                return posicionY;
-            }
-            private set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(
-                        nameof(PosicionY),
-                        "La posición Y no puede ser negativa."
-                    );
-                }
-
-                posicionY = value;
-            }
-        }
 
         // Propiedad para el daño
         public int Dano
