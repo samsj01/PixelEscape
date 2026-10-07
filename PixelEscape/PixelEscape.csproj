@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coleccionables.cs" />
     <Compile Include="Personaje.cs" />
     <Compile Include="Llave.cs" />
     <Compile Include="Moneda.cs" />

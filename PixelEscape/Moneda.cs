@@ -6,37 +6,21 @@ using System.Threading.Tasks;
 
 namespace PixelEscape
 {
-    internal class Moneda
+    internal class Moneda : Coleccionables
     {
-        int x;
-        int y;
-        int valor; // nuevo
-        public int X { get => x; }
-        public int Y { get => x; }
+        int valor = 100;
         public int Valor { get => valor; }
-        public bool Recogida { get; set; } = false;
-        Random rd = new Random(); // nuevo
-
-        public Moneda()
+        public Moneda(int x, int y, int valor) : base(x, y)
         {
-            this.x = rd.Next(1, 15);
-            this.y = 0;
-            this.valor = 100;
+            this.valor = valor;
         }
-
-        public bool SerRecogida(Jugador jugador)
+        public void RecogerMoneda(Jugador jugador)
         {
-            if (!Recogida)
+            if (!Recogido)
             {
                 jugador.Puntaje += this.valor;
-                this.x = rd.Next(0, 15);
-                this.Recogida = true;
-                return Recogida;
+                Recogido = true;
             }
-            this.Recogida = false;
-            return Recogida;
         }
-
-
     }
 }
