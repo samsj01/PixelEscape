@@ -16,7 +16,7 @@ namespace PixelEscape
             // posición Predefinida.
             Console.WriteLine($"posición: {escapist.MostrarPosicion()}");
             //Mover 5 pasos a la izquierda.
-            escapist.MoverHorizontal(-5);
+            escapist.Moverse(-5);
             //nueva posición.
             Console.WriteLine($"posición: {escapist.MostrarPosicion()}");
             
@@ -44,9 +44,9 @@ namespace PixelEscape
             Console.WriteLine($"En el suelo: {escapist.EnElSuelo}");
 
             GuardianPixel guardian = new GuardianPixel();
-            guardian.Patrullar(6);
+            guardian.Moverse(6);
             Console.WriteLine($"Posición del guardián: {guardian.X},{guardian.Y}");
-            guardian.Patrullar(6);
+            guardian.Moverse(6);
             Console.WriteLine($"Posición del guardián: {guardian.X},{guardian.Y}");
             escapist.RecibirDano(guardian.Atacar(escapist));
             Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");

@@ -15,6 +15,7 @@ namespace PixelEscape
         bool estaVivo;
         protected int dano;
 
+
         public int X { get => x; protected set => x = value; }
         public int Y { get => y; protected set => y = value; }
         public int Vida { get => vida; set => vida = value;}
@@ -23,8 +24,8 @@ namespace PixelEscape
 
         public Personaje()
         {
-            this.x = 0;
-            this.y = 0;
+            this.X = 0;
+            this.Y = 0;
             this.vida = 1;
             this.velocidad = 1;
             this.EstaVivo = true;
@@ -36,7 +37,7 @@ namespace PixelEscape
             return $"{this.X},{this.Y}";
         }
 
-        public virtual bool MoverHorizontal(int pasos)
+        public virtual bool Moverse(int pasos)
         {
             this.X += pasos * velocidad;
             return true;
@@ -63,14 +64,9 @@ namespace PixelEscape
             return EstaVivo;
         }
 
-        public virtual bool Atacar(Personaje objetivo)
+        public virtual int Atacar(Personaje objetivo)
         {
-            if (objetivo.MostrarPosicion() == this.MostrarPosicion()) 
-            {
-                objetivo.RecibirDano(this.dano);
-                return true;
-            }
-            return false;
+            return dano;
         }
 
 
@@ -117,5 +113,80 @@ namespace PixelEscape
             }
 
         }
-    }   
+    } 
+    
+    internal class CazadorPixel : Personaje
+    {
+        double rangoDeteccion;
+        public double RangoDeteccion { get => rangoDeteccion; 
+            private set => rangoDeteccion = value; }
+        public CazadorPixel() : base()
+        {
+            this.X = 30;
+            this.Y = 0;
+            this.Velocidad = 3;
+            this.dano = 1;
+            this.RangoDeteccion = 2;
+        }
+
+        bool CalcularDistancia() 
+        {
+            double distancia = Math.Sqrt(Math.Pow(this.X - 0, 2) + Math.Pow(this.Y - 0, 2));
+            if (distancia <= this.RangoDeteccion)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override int Atacar(Personaje objetivo)
+        {
+            if (CalcularDistancia() && objetivo.MostrarPosicion() == this.MostrarPosicion())
+            {
+                objetivo.RecibirDano(this.dano);
+                return dano;
+            }
+            return 0;
+        }
+    }
+    internal class GuardianPixel : Personaje 
+    {
+        bool direccion = false; // false = izquierda, true = derecha
+        public GuardianPixel() : base()
+        {
+            this.X = 50;
+            this.Y = 0;
+            this.Velocidad = 1;
+            this.dano = 1;
+        }
+
+        public bool Direccion { get => direccion; set => direccion = value; }
+
+        public override bool Moverse(int pasos)
+        {
+            if (pasos >= 0)
+            {
+                if (!Direccion)
+                {
+                    for (int i = 0; i < pasos; i++)
+                    {
+                        //camina de izquierda a derecha
+                        this.X = this.X + 1 * Velocidad;
+                    }
+                    Direccion = true;//pasa a caminar de derecha a izquierda
+                }
+                else
+                {
+                    for (int i = 0; i < pasos; i++)
+                    {
+                        //camina de derecha a izquierda
+                        this.X = this.X - 1 * Velocidad;
+                    }
+                    Direccion = false; //pasa a caminar de izquierda a derecha
+                }
+                return true;
+            }
+            return false;
+        }
+    }
 }

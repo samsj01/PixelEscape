@@ -43,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CazadorPixel.cs" />
-    <Compile Include="GuardianPixel.cs" />
     <Compile Include="Personaje.cs" />
     <Compile Include="Llave.cs" />
     <Compile Include="Moneda.cs" />
