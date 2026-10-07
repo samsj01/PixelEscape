@@ -14,6 +14,7 @@ namespace PixelEscape
         int velocidad;
         bool estaVivo;
         protected int dano;
+        string direccion;
 
 
         public int X { get => x; protected set => x = value; }
@@ -21,6 +22,7 @@ namespace PixelEscape
         public int Vida { get => vida; set => vida = value;}
         public int Velocidad { get => velocidad; protected set => velocidad = value; }
         public bool EstaVivo { get => estaVivo; set => estaVivo = value; }
+        public string Direccion { get => direccion; set => direccion = value; }
 
         public Personaje()
         {
@@ -30,6 +32,7 @@ namespace PixelEscape
             this.velocidad = 1;
             this.EstaVivo = true;
             this.dano = 1;
+            this.Direccion = "Derecha";
         }
 
         public string MostrarPosicion()
@@ -37,11 +40,20 @@ namespace PixelEscape
             return $"{this.X},{this.Y}";
         }
 
-        public virtual bool Moverse(int pasos)
+        public bool MoverIzq()
         {
-            this.X += pasos * velocidad;
+            this.X -= 1* velocidad;
+            Direccion = "Izquierda";
             return true;
         }
+
+        public bool MoverDer()
+        {
+            this.X += 1 * velocidad;
+            Direccion = "Derecha";
+            return true;
+        }
+
 
         public virtual void RecibirDano(int dano)
         {
@@ -64,9 +76,14 @@ namespace PixelEscape
             return EstaVivo;
         }
 
+        protected virtual void Collisionar()
+        {
+
+        }
+
         public virtual int Atacar(Personaje objetivo)
         {
-            return dano;
+            return 0;
         }
 
 
@@ -126,22 +143,21 @@ namespace PixelEscape
             this.Y = 0;
             this.Velocidad = 3;
             this.dano = 1;
-            this.RangoDeteccion = 2;
+            this.RangoDeteccion = 50;
         }
 
-        bool CalcularDistancia() 
+        bool CalcularDistancia(Personaje objetivo) 
         {
-            double distancia = Math.Sqrt(Math.Pow(this.X - 0, 2) + Math.Pow(this.Y - 0, 2));
-            if (distancia <= this.RangoDeteccion)
-            {
-                return true;
-            }
-            return false;
+            double deltaX = this.X - objetivo.X;
+            double deltaY = this.Y - objetivo.Y;
+            double distancia = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            return distancia <= RangoDeteccion;
         }
 
         public override int Atacar(Personaje objetivo)
         {
-            if (CalcularDistancia() && objetivo.MostrarPosicion() == this.MostrarPosicion())
+            if (CalcularDistancia(objetivo))
             {
                 objetivo.RecibirDano(this.dano);
                 return dano;
@@ -151,7 +167,6 @@ namespace PixelEscape
     }
     internal class GuardianPixel : Personaje 
     {
-        bool direccion = false; // false = izquierda, true = derecha
         public GuardianPixel() : base()
         {
             this.X = 50;
@@ -160,33 +175,5 @@ namespace PixelEscape
             this.dano = 1;
         }
 
-        public bool Direccion { get => direccion; set => direccion = value; }
-
-        public override bool Moverse(int pasos)
-        {
-            if (pasos >= 0)
-            {
-                if (!Direccion)
-                {
-                    for (int i = 0; i < pasos; i++)
-                    {
-                        //camina de izquierda a derecha
-                        this.X = this.X + 1 * Velocidad;
-                    }
-                    Direccion = true;//pasa a caminar de derecha a izquierda
-                }
-                else
-                {
-                    for (int i = 0; i < pasos; i++)
-                    {
-                        //camina de derecha a izquierda
-                        this.X = this.X - 1 * Velocidad;
-                    }
-                    Direccion = false; //pasa a caminar de izquierda a derecha
-                }
-                return true;
-            }
-            return false;
-        }
     }
 }
