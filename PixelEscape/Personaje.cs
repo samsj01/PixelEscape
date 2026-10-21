@@ -21,7 +21,7 @@ namespace PixelEscape
         public int X { get => x; protected set => x = value; }
         public int Y { get => y; protected set => y = value; }
         public int Vida { get => vida; set => vida = value;}
-        public int Velocidad { get => velocidad; protected set => velocidad = value; }
+        public int Velocidad { get => velocidad; set => velocidad = value; }
         public bool EstaVivo { get => estaVivo; set => estaVivo = value; }
         public string Direccion { get => direccion; set => direccion = value; }
         public bool Colision { get => colision; set => colision = value; }

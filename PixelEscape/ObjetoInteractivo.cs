@@ -1,49 +1,19 @@
-public abstract class ObjetoInteractivo
+
+
+using System;
+
+namespace PixelEscape 
 {
-    protected int posicionX;
-    protected int posicionY;
 
-    protected int hitbox = 0;
-    protected bool colision = false;
-
-    public int PosicionX
-{
-    get
+    public abstract class ObjetoInteractivo
     {
-        return posicionX;
-    }
-    protected set
-    {
-        if (value < 0)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(PosicionX),
-                "La posición X no puede ser negativa."
-            );
-        }
+        private int posicionX;
+        private int posicionY;
+        protected bool colision = false;
+        private bool activo;
 
-        posicionX = value;
+        protected int PosicionX { get => posicionX; set => posicionX = value; }
+        protected int PosicionY { get => posicionY; set => posicionY = value; }
+        protected bool Activo { get => activo; set => activo = value; }
     }
-}
-
-public int PosicionY
-{
-    get
-    {
-        return posicionY;
-    }
-    protected set
-    {
-        if (value < 0)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(PosicionY),
-                "La posición Y no puede ser negativa."
-            );
-        }
-
-        posicionY = value;
-    }
-
-}
 }

@@ -49,11 +49,11 @@ namespace PixelEscape
         {
             this.duracion = duracion;
         }
-        public void recogerPowerUp(Personaje jugador)
+        public void recogerPowerUp(Jugador jugador)
         {
             if (!Recogido)
             {
-                Jugador.velocidad +=2 ;
+                jugador.Velocidad = 2;
                 Recogido = true;
             }
             recogido = false;

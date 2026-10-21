@@ -8,17 +8,6 @@ namespace PixelEscape
     {
 
         // Propiedad que indica si el punto de control está activo
-        public bool Activo
-        {
-            get
-            {
-                return activo;
-            }
-            private set
-            {
-                activo = value;
-            }
-        }
 
         // Constructor
         public PuntoControl(int posicionX, int posicionY)
@@ -29,7 +18,7 @@ namespace PixelEscape
         }
 
         // Activa el punto de control
-        public override bool Activar(Personaje escapist)
+        public bool Activar(Jugador escapist)
         {
             Activo = true;
             return Activo;

@@ -20,8 +20,8 @@ namespace PixelEscape
         }
 
         //get y set
-        public int X { get { return posicionX; } set { posicionX = value; } }
-        public int Y { get { return posicionY; } set { posicionY = value; } }
+        public int X { get { return PosicionX; } set { PosicionX = value; } }
+        public int Y { get { return PosicionY; } set { PosicionY = value; } }
         public bool EstadoPuerta { get => estadoPuerta; set => estadoPuerta = value; }
 
         //Métodos

@@ -31,7 +31,7 @@ namespace PixelEscape
         {
             if (EnElSuelo)
             {
-                this.Y += FuerzaSalto * VelY;
+                this.Y -= FuerzaSalto * VelY;
                 EnElSuelo = false;
             }
         }
@@ -39,7 +39,7 @@ namespace PixelEscape
         {
             if (!EnElSuelo)
             {
-                this.Y -= this.VelY * gravedad;
+                this.Y += this.VelY * gravedad;
                 if (this.Y == suelo)
                 {
                     EnElSuelo = true;
