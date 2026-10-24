@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PixelEscape
 {
-    internal class Personaje
+    internal class Personaje: ElementoGrafico
     {
-        int x;
-        int y;
         int vida;
         int velocidad;
         bool estaVivo;
@@ -18,18 +17,24 @@ namespace PixelEscape
         bool colision;
 
 
-        public int X { get => x; protected set => x = value; }
-        public int Y { get => y; protected set => y = value; }
+        
         public int Vida { get => vida; set => vida = value;}
         public int Velocidad { get => velocidad; set => velocidad = value; }
         public bool EstaVivo { get => estaVivo; set => estaVivo = value; }
         public string Direccion { get => direccion; set => direccion = value; }
         public bool Colision { get => colision; set => colision = value; }
 
-        public Personaje()
+        public Personaje(int x, int y, int w, int h, string nombre) :
+           base( x, y, w, h, nombre)
         {
-            this.X = 0;
-            this.Y = 0;
+            this.vida = 1;
+            this.velocidad = 1;
+            this.EstaVivo = true;
+            this.dano = 1;
+            this.Direccion = "Derecha";
+        }
+        public Personaje() 
+        {
             this.vida = 1;
             this.velocidad = 1;
             this.EstaVivo = true;
@@ -37,21 +42,16 @@ namespace PixelEscape
             this.Direccion = "Derecha";
         }
 
-        public string MostrarPosicion()
-        {
-            return $"{this.X},{this.Y}";
-        }
-
         public bool MoverIzq()
         {
-            this.X -= 1* velocidad;
+            this.SetPos(this.X -= 1 * velocidad, Y);
             Direccion = "Izquierda";
             return true;
         }
 
         public bool MoverDer()
         {
-            this.X += 1 * velocidad;
+            this.SetPos(this.X += 1 * velocidad, Y);
             Direccion = "Derecha";
             return true;
         }
@@ -79,11 +79,13 @@ namespace PixelEscape
         }
 
 
-        public virtual int Atacar(Personaje objetivo)
+        public virtual int Atacar(Personaje objetivo, bool colision)
         {
+            this.Colision = colision;
             if (Colision) 
             { 
                 objetivo.RecibirDano(this.dano);
+                return 0;
             }
             Colision = false;
             return 0;

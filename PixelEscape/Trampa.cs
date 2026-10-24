@@ -9,15 +9,11 @@ namespace PixelEscape
         private int dano;
         public int Dano { get => dano;}
 
-
-
-
-
         // Constructor
         public Trampa(int posicionX, int posicionY, int dano)
         {
-            PosicionX = posicionX;
-            PosicionY = posicionY;
+            this.X = posicionX;
+            this.Y = posicionY;
             this.dano = dano;
             Activo = false;
         }
@@ -25,24 +21,15 @@ namespace PixelEscape
        // Trampa Activa
         public override bool Activar(Jugador escapista)
         {
-            if (escapista.X == this.PosicionX)
+            if (escapista.X == this.X)
             {
                 Activo = true;
+                escapista.RecibirDano(Dano);
                 return Activo;
+                
             }
             return Activo;
     
-        }
-
-        // Retorna el daño que causa la trampa
-        public int CausarDano()
-        {
-            if (Activo)
-            {
-                return Dano;
-            }
-
-            return 0;
         }
     }
 }

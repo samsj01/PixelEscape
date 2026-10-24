@@ -14,10 +14,18 @@ namespace PixelEscape
             get => rangoDeteccion;
             private set => rangoDeteccion = value;
         }
+
+        public CazadorPixel(int x, int y, int w, int h, string nombre) :
+           base(x, y, w, h, nombre)
+        {
+            this.Vida = 1;
+            this.Velocidad = 2;
+            this.EstaVivo = true;
+            this.dano = 1;
+            this.Direccion = "Derecha";
+        }
         public CazadorPixel() : base()
         {
-            this.X = 30;
-            this.Y = 0;
             this.Velocidad = 3;
             this.dano = 1;
             this.RangoDeteccion = 50;
@@ -36,12 +44,12 @@ namespace PixelEscape
             return false;
         }
 
-        public override int Atacar(Personaje objetivo)
+        public override int Atacar(Personaje objetivo, bool colision)
         {
-            if (CalcularDistancia(objetivo))
+            this.Colision = colision;
+            if (CalcularDistancia(objetivo) && Colision)
             {
                 objetivo.RecibirDano(this.dano);
-                return dano;
             }
             return 0;
         }

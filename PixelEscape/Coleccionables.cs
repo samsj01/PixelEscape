@@ -6,23 +6,18 @@ using System.Threading.Tasks;
 
 namespace PixelEscape
 {
-    internal class Coleccionables
+    internal class Coleccionables: ElementoGrafico
     {
-        //atributos
-        int x;
-        int y;
         protected bool recogido;
         Random rd = new Random();
 
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
         public bool Recogido { get => recogido; set => recogido = value; }
 
         //constructor
         public Coleccionables(int x, int y)
         {
-            this.x = rd.Next();
-            this.y = y;
+            this.X = rd.Next();
+            this.Y = y;
             this.recogido = false;
         }
 

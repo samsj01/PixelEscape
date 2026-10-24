@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,18 @@ namespace PixelEscape
         int velY = 1;
         int gravedad = 1;
         int fuerzaSalto = 3;
-        int suelo = 0;
+        
 
         public bool EnElSuelo { get; private set; } = true;
         public int Puntaje { get => puntaje; set => puntaje = value; }
         public int VelY { get => velY; set => velY = value; }
         public int FuerzaSalto { get => fuerzaSalto; }
 
-        public Jugador() : base()
+        public Jugador(int x, int y, int w, int h, string name)
+            : base(x, y, w, h, null)
         {
-            this.X = 0;
-            this.Y = 0;
+            this.X = x;
+            this.Y = y;
             this.Vida = 3;
             this.Puntaje = 0;
             this.dano = 1;
@@ -31,7 +33,7 @@ namespace PixelEscape
         {
             if (EnElSuelo)
             {
-                this.Y -= FuerzaSalto * VelY;
+                this.SetPos(X, this.Y -= FuerzaSalto * VelY);
                 EnElSuelo = false;
             }
         }
@@ -39,8 +41,8 @@ namespace PixelEscape
         {
             if (!EnElSuelo)
             {
-                this.Y += this.VelY * gravedad;
-                if (this.Y == suelo)
+                this.SetPos(X,this.Y += this.VelY * gravedad);
+                if (this.Y == 0)
                 {
                     EnElSuelo = true;
                 }

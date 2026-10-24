@@ -10,8 +10,6 @@ namespace PixelEscape
     {
         public GuardianPixel() : base()
         {
-            this.X = 50;
-            this.Y = 0;
             this.Velocidad = 1;
             this.dano = 1;
         }

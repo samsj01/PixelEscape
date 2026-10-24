@@ -12,8 +12,8 @@ namespace PixelEscape
         // Constructor
         public PuntoControl(int posicionX, int posicionY)
         {
-            PosicionX = posicionX;
-            PosicionY = posicionY;
+            this.X = posicionX;
+            this.Y = posicionY;
             Activo = false;
         }
 

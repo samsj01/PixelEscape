@@ -11,20 +11,20 @@ namespace PixelEscape
     {
         static void Main(string[] args)
         {
-            Jugador escapist = new Jugador();
+            Jugador escapist = new Jugador(0, 0, 32, 32, "jugador");
             
             // posición Predefinida.
-            Console.WriteLine($"posición: {escapist.MostrarPosicion()}");
+            Console.WriteLine($"posición: {escapist.Ubicacion}");
             //Mover 5 pasos a la izquierda.
-            escapist.Moverse(-5);
+            escapist.MoverIzq();
             //nueva posición.
-            Console.WriteLine($"posición: {escapist.MostrarPosicion()}");
-            
+            Console.WriteLine($"posición: {escapist.Ubicacion}");
+
             //Se crea cazador
             CazadorPixel cazador = new CazadorPixel();
             Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
             //Cazador hiere
-            escapist.RecibirDano(cazador.Atacar(escapist));
+            escapist.RecibirDano(cazador.Atacar(escapist, true));
             Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
 
             // Salto
@@ -35,23 +35,24 @@ namespace PixelEscape
 
             //Aterrizaje
             Console.WriteLine("Aterrizando");
-            for(int i = 0; i < escapist.FUERZASALTO1; i++)
+            for(int i = 0; i < escapist.FuerzaSalto; i++)
             {
                 escapist.Aterrizar();
-                Console.WriteLine($"x,y: {escapist.X},{escapist.Y}");
+                Console.WriteLine($"posición: {escapist.Ubicacion}");
             }
 
             Console.WriteLine($"En el suelo: {escapist.EnElSuelo}");
 
             GuardianPixel guardian = new GuardianPixel();
-            guardian.Moverse(6);
-            Console.WriteLine($"Posición del guardián: {guardian.X},{guardian.Y}");
-            guardian.Moverse(6);
-            Console.WriteLine($"Posición del guardián: {guardian.X},{guardian.Y}");
-            escapist.RecibirDano(guardian.Atacar(escapist));
+            Console.WriteLine($"posición: {guardian.Ubicacion}");
+            guardian.MoverIzq();
+            Console.WriteLine($"posición: {guardian.Ubicacion}");
+            guardian.MoverDer();
+            Console.WriteLine($"posición: {guardian.Ubicacion}");
+            escapist.RecibirDano(guardian.Atacar(escapist, true));
             Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
             Console.WriteLine($"El jugador esta vivo?: {escapist.EstaMuerto()}");
-            escapist.RecibirDano(guardian.Atacar(escapist));
+            escapist.RecibirDano(guardian.Atacar(escapist, true));
             Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
             Console.WriteLine($"El jugador esta vivo?: {escapist.EstaMuerto()}");
 
