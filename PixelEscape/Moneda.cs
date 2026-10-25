@@ -14,13 +14,9 @@ namespace PixelEscape
         {
             this.valor = valor;
         }
-        public void RecogerMoneda(Jugador jugador)
+        protected override void AplicarEfecto(Jugador jugador)
         {
-            if (!Recogido)
-            {
-                jugador.Puntaje += this.valor;
-                Recogido = true;
-            }
+            jugador.Puntaje += this.valor;
         }
     }
 }

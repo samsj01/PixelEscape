@@ -12,13 +12,9 @@ namespace PixelEscape
         {
         }
 
-        public void RecogerLlave(Personaje jugador)
+        // La llave no modifica al jugador: la Puerta consulta su estado Recogido.
+        protected override void AplicarEfecto(Jugador jugador)
         {
-            if (!Recogido)
-            {
-                Recogido = true;
-            }
-            recogido = false;
         }
     }
 }

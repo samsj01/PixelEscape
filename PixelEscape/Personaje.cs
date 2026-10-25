@@ -7,13 +7,31 @@ using System.Threading.Tasks;
 
 namespace PixelEscape
 {
-    internal class Personaje: ElementoGrafico
+    // Interfaces de rol pequeñas (ISP): cada cliente depende solo de lo que usa.
+    internal interface IMovible
+    {
+        bool MoverIzq();
+        bool MoverDer();
+    }
+
+    internal interface IDanable
+    {
+        void RecibirDano(int dano);
+        bool EstaMuerto();
+    }
+
+    internal interface IAtacante
+    {
+        int Atacar(Personaje objetivo, bool colision);
+    }
+
+    internal abstract class Personaje: ElementoGrafico, IMovible, IDanable, IAtacante
     {
         int vida;
         int velocidad;
         bool estaVivo;
         protected int dano;
-        string direccion;
+        int direccion;
         bool colision;
 
 
@@ -21,7 +39,7 @@ namespace PixelEscape
         public int Vida { get => vida; set => vida = value;}
         public int Velocidad { get => velocidad; set => velocidad = value; }
         public bool EstaVivo { get => estaVivo; set => estaVivo = value; }
-        public string Direccion { get => direccion; set => direccion = value; }
+        public int Direccion { get => direccion; set => direccion = value; }
         public bool Colision { get => colision; set => colision = value; }
 
         public Personaje(int x, int y, int w, int h, string nombre) :
@@ -31,7 +49,7 @@ namespace PixelEscape
             this.velocidad = 1;
             this.EstaVivo = true;
             this.dano = 1;
-            this.Direccion = "Derecha";
+            this.Direccion = 1;
         }
         public Personaje() 
         {
@@ -39,20 +57,21 @@ namespace PixelEscape
             this.velocidad = 1;
             this.EstaVivo = true;
             this.dano = 1;
-            this.Direccion = "Derecha";
+            this.Direccion = 1;
         }
 
-        public bool MoverIzq()
+        // Devuelve true si el personaje se movió. Las subclases pueden restringirlo (OCP/LSP).
+        public virtual bool MoverIzq()
         {
-            this.SetPos(this.X -= 1 * velocidad, Y);
-            Direccion = "Izquierda";
+            this.SetPos(this.X - velocidad, Y);
+            Direccion = -1;
             return true;
         }
 
-        public bool MoverDer()
+        public virtual bool MoverDer()
         {
-            this.SetPos(this.X += 1 * velocidad, Y);
-            Direccion = "Derecha";
+            this.SetPos(this.X + velocidad, Y);
+            Direccion = 1;
             return true;
         }
 
@@ -64,31 +83,38 @@ namespace PixelEscape
             {
                 this.Vida = 0;
             }
-            EstaMuerto();
+            ActualizarEstado();
         }
 
+        // Actualiza EstaVivo según la vida actual.
+        void ActualizarEstado()
+        {
+            EstaVivo = this.Vida > 0;
+        }
+
+        // Devuelve true cuando el personaje ya no tiene vida.
         public bool EstaMuerto() 
         {
-            if (this.Vida <= 0)
-            {
-                EstaVivo = false;
-                return EstaVivo;
-            }
-            EstaVivo = true;
-            return EstaVivo;
+            ActualizarEstado();
+            return !EstaVivo;
         }
 
 
+        // Plantilla del ataque: las subclases cambian solo la condición (PuedeAtacar),
+        // sin reescribir el método completo.
         public virtual int Atacar(Personaje objetivo, bool colision)
         {
             this.Colision = colision;
-            if (Colision) 
+            if (PuedeAtacar(objetivo)) 
             { 
                 objetivo.RecibirDano(this.dano);
-                return 0;
             }
-            Colision = false;
             return 0;
+        }
+
+        protected virtual bool PuedeAtacar(Personaje objetivo)
+        {
+            return Colision;
         }
 
 

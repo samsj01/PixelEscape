@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PixelEscape
 {
+    // Duplica la jerarquía Coleccionables (PowerUpVelocidad / PowerUpEscudo) y usa un
+    // string como tipo, lo que obliga a modificar la clase para cada power-up nuevo.
+    [Obsolete("Usar PowerUpVelocidad o PowerUpEscudo (jerarquía Coleccionables).")]
     internal class Power_up
     {
         //Atributos

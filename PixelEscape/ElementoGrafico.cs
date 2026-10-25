@@ -19,10 +19,10 @@ namespace PixelEscape
         Point ubicacion;
         string nombreRecurso;
 
-        public Point Ubicacion { get => ubicacion; set => ubicacion = value; }
+        public Point Ubicacion { get => ubicacion; private set => ubicacion = value; }
         protected string NombreRecurso { get => nombreRecurso;}
-        public int X { get => x; protected set => x = value; }
-        public int Y { get => y; protected set => x = value; }
+        public int X { get => x; protected set { x = value; ubicacion = new Point(x, y); } }
+        public int Y { get => y; protected set { y = value; ubicacion = new Point(x, y); } }
         public int Ancho { get => ancho; set => ancho = value; }
         public int Alto { get => alto; set => alto = value; }
         public PictureBox Imagen{get;set;}
@@ -35,14 +35,6 @@ namespace PixelEscape
             Ancho = ancho;
             Alto = alto;
             Ubicacion = new Point(x, y);
-            Imagen = new PictureBox
-            {
-                Location = new Point(x, y),
-                Size = new Size(ancho, alto),
-                //Image = (Image)Properties.Resources.ResourceManager.GetObject(nombre),
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                BackColor = Color.Transparent
-            };
             this.nombreRecurso = nombreRecurso; 
         }
 
@@ -53,19 +45,17 @@ namespace PixelEscape
             Ancho = 32;
             Alto = 32;
             Ubicacion = new Point(this.X, this.Y);
-            Imagen = new PictureBox
-            {
-                Location = new Point(this.X, this.Y),
-                Size = new Size(Ancho, Alto),
-                //Image = (Image)Properties.Resources.ResourceManager.GetObject(nombre),
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                BackColor = Color.Transparent
-            };
+            this.nombreRecurso = null;
         }
 
         public virtual Rectangle GetBounds()
         {
-            return Imagen.Bounds;
+            // Si todavía no hay imagen (p. ej. en consola) se usa la geometría propia.
+            if (Imagen != null)
+            {
+                return Imagen.Bounds;
+            }
+            return new Rectangle(X, Y, Ancho, Alto);
         }
 
         public void SetPos(int x, int y)

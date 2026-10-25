@@ -8,6 +8,7 @@ namespace PixelEscape
 {
     internal class CazadorPixel : Personaje
     {
+        const double RangoPorDefecto = 50;
         double rangoDeteccion;
         public double RangoDeteccion
         {
@@ -22,13 +23,14 @@ namespace PixelEscape
             this.Velocidad = 2;
             this.EstaVivo = true;
             this.dano = 1;
-            this.Direccion = "Derecha";
+            this.Direccion = 1;
+            this.RangoDeteccion = RangoPorDefecto;
         }
         public CazadorPixel() : base()
         {
             this.Velocidad = 3;
             this.dano = 1;
-            this.RangoDeteccion = 50;
+            this.RangoDeteccion = RangoPorDefecto;
         }
 
         bool CalcularDistancia(Personaje objetivo)
@@ -44,14 +46,10 @@ namespace PixelEscape
             return false;
         }
 
-        public override int Atacar(Personaje objetivo, bool colision)
+        // El Cazador solo ataca si el objetivo está dentro de su rango de detección.
+        protected override bool PuedeAtacar(Personaje objetivo)
         {
-            this.Colision = colision;
-            if (CalcularDistancia(objetivo) && Colision)
-            {
-                objetivo.RecibirDano(this.dano);
-            }
-            return 0;
+            return CalcularDistancia(objetivo) && Colision;
         }
     }
 }

@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 
 namespace PixelEscape
 {
     
 
-    internal class PuntoControl : ObjetoInteractivo
+    internal class PuntoControl : ObjetoActivable
     {
 
         // Propiedad que indica si el punto de control está activo
@@ -18,7 +18,7 @@ namespace PixelEscape
         }
 
         // Activa el punto de control
-        public bool Activar(Jugador escapist)
+        public override bool Activar(Jugador escapist)
         {
             Activo = true;
             return Activo;

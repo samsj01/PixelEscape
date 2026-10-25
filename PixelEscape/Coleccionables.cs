@@ -6,71 +6,82 @@ using System.Threading.Tasks;
 
 namespace PixelEscape
 {
-    internal class Coleccionables: ElementoGrafico
+    // Contrato mínimo de lo que se puede recoger (ISP/DIP).
+    internal interface IRecolectable
+    {
+        bool Recogido { get; }
+        void Recoger(Jugador jugador);
+    }
+
+    internal abstract class Coleccionables: ElementoGrafico, IRecolectable
     {
         protected bool recogido;
-        Random rd = new Random();
 
         public bool Recogido { get => recogido; set => recogido = value; }
 
         //constructor
-        public Coleccionables(int x, int y)
+        protected Coleccionables(int x, int y)
         {
-            this.X = rd.Next();
+            this.X = x;
             this.Y = y;
             this.recogido = false;
         }
 
         //metodos
 
-        public void Recoger (Personaje jugador)
+        // Método plantilla: controla que se recoja una sola vez y delega el efecto
+        // a cada subclase (OCP: un coleccionable nuevo no obliga a tocar esta clase).
+        public void Recoger (Jugador jugador)
         {
             if (recogido)
             {
-                this.recogido = true;
+                return;
             }
-            recogido= false;
+            recogido = true;
+            AplicarEfecto(jugador);
         }  
+
+        protected abstract void AplicarEfecto(Jugador jugador);
         
     }
 
     
 
-    internal class PowerUpVelocidad : Coleccionables
+    // Base común de los power-ups con duración (evita repetir 'duracion' en cada uno).
+    internal abstract class PowerUpTemporal : Coleccionables
     {
         int duracion;
         public int Duracion { get => duracion; set => duracion = value; }
-        public PowerUpVelocidad(int x, int y, int duracion) : base(x, y)
+
+        protected PowerUpTemporal(int x, int y, int duracion) : base(x, y)
         {
             this.duracion = duracion;
-        }
-        public void recogerPowerUp(Jugador jugador)
-        {
-            if (!Recogido)
-            {
-                jugador.Velocidad = 2;
-                Recogido = true;
-            }
-            recogido = false;
         }
     }
 
-    internal class PowerUpEscudo : Coleccionables
+    internal class PowerUpVelocidad : PowerUpTemporal
     {
-        int duracion;
-        public int Duracion { get => duracion; set => duracion = value; }
-        public PowerUpEscudo(int x, int y, int duracion) : base(x, y)
+        const int VelocidadConPowerUp = 2;
+
+        public PowerUpVelocidad(int x, int y, int duracion) : base(x, y, duracion)
         {
-            this.duracion = duracion;
         }
-        public void RecogerPowerUp(Personaje jugador)
+
+        protected override void AplicarEfecto(Jugador jugador)
         {
-            if (!Recogido)
-            {
-                jugador.Vida += 1;
-                Recogido = true;
-            }
-            recogido = false;
+            jugador.Velocidad = VelocidadConPowerUp;
+        }
+    }
+
+    internal class PowerUpEscudo : PowerUpTemporal
+    {
+        public PowerUpEscudo(int x, int y, int duracion) : base(x, y, duracion)
+        {
+        }
+
+        protected override void AplicarEfecto(Jugador jugador)
+        {
+            jugador.Vida += 1;
         }
     }
 
