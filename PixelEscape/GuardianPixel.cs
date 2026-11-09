@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PixelEscape
 {
+    // Enemigo básico: velocidad moderada, patrulla y ataca al contacto.
     internal class GuardianPixel : Personaje
     {
-        public GuardianPixel() : base()
+        const int VelocidadGuardian = 1;
+
+        public GuardianPixel(int x, int y) : base(x, y)
         {
-            this.Velocidad = 1;
-            this.dano = 1;
+            Velocidad = VelocidadGuardian;
+            Dano = 1;
         }
 
+        public GuardianPixel() : this(0, 0)
+        {
+        }
     }
 }

@@ -1,70 +1,100 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System;
 
 namespace PixelEscape
 {
+    // Pruebas por consola de las clases del juego.
     internal class Program
     {
         static void Main(string[] args)
         {
-            Jugador escapist = new Jugador(0, 0, 32, 32, "jugador");
-            
-            // posición Predefinida.
-            Console.WriteLine($"posición: {escapist.Ubicacion}");
-            //Mover 5 pasos a la izquierda.
-            escapist.MoverIzq();
-            //nueva posición.
-            Console.WriteLine($"posición: {escapist.Ubicacion}");
+            Jugador jugador = new Jugador(0, 0);
 
-            //Se crea cazador
+            ProbarMovimiento(jugador);
+            ProbarAtaqueCazador(jugador);
+            ProbarSaltos(jugador);
+            ProbarGuardian(jugador);
+            ProbarObjetos();
+        }
+
+        static string Pos(Personaje p)
+        {
+            return $"{{X={p.X},Y={p.Y}}}";
+        }
+
+        static void ProbarMovimiento(Jugador jugador)
+        {
+            Console.WriteLine($"posición: {Pos(jugador)}");
+            jugador.MoverIzq(); // un paso a la izquierda
+            Console.WriteLine($"posición: {Pos(jugador)}");
+        }
+
+        static void ProbarAtaqueCazador(Jugador jugador)
+        {
             CazadorPixel cazador = new CazadorPixel();
-            Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
-            //Cazador hiere
-            escapist.RecibirDano(cazador.Atacar(escapist, true));
-            Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
+            Console.WriteLine($"Jugador tiene {jugador.Vida} vidas");
+            cazador.Atacar(jugador, true);
+            Console.WriteLine($"Jugador tiene {jugador.Vida} vidas");
 
             // Fin del fotograma: el MoverIzq anterior ya no cuenta para el próximo salto.
-            escapist.Aterrizar();
+            jugador.Aterrizar();
+        }
 
-            // Salto vertical: salta sin moverse a los lados.
+        static void ProbarSaltos(Jugador jugador)
+        {
             Console.WriteLine("Salto vertical");
-            escapist.Saltar();
-            SimularVuelo(escapist);
+            jugador.Saltar();
+            SimularVuelo(jugador);
 
-            // Salto parabólico: se mueve a la derecha y salta en el mismo fotograma.
             Console.WriteLine("Salto parabólico hacia la derecha");
-            escapist.MoverDer();
-            escapist.Saltar();
-            SimularVuelo(escapist);
+            jugador.MoverDer();
+            jugador.Saltar();
+            SimularVuelo(jugador);
 
-            // Salto parabólico hacia la izquierda.
             Console.WriteLine("Salto parabólico hacia la izquierda");
-            escapist.MoverIzq();
-            escapist.Saltar();
-            SimularVuelo(escapist);
+            jugador.MoverIzq();
+            jugador.Saltar();
+            SimularVuelo(jugador);
 
+            Console.WriteLine($"En el suelo: {jugador.EnElSuelo}");
+        }
 
-            Console.WriteLine($"En el suelo: {escapist.EnElSuelo}");
-
+        static void ProbarGuardian(Jugador jugador)
+        {
             GuardianPixel guardian = new GuardianPixel();
-            Console.WriteLine($"posición: {guardian.Ubicacion}");
+            Console.WriteLine($"posición: {Pos(guardian)}");
             guardian.MoverIzq();
-            Console.WriteLine($"posición: {guardian.Ubicacion}");
+            Console.WriteLine($"posición: {Pos(guardian)}");
             guardian.MoverDer();
-            Console.WriteLine($"posición: {guardian.Ubicacion}");
-            escapist.RecibirDano(guardian.Atacar(escapist, true));
-            Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
-            Console.WriteLine($"El jugador esta vivo?: {!escapist.EstaMuerto()}");
-            escapist.RecibirDano(guardian.Atacar(escapist, true));
-            Console.WriteLine($"Jugador tiene {escapist.Vida} vidas");
-            Console.WriteLine($"El jugador esta vivo?: {!escapist.EstaMuerto()}");
+            Console.WriteLine($"posición: {Pos(guardian)}");
 
+            for (int i = 0; i < 2; i++)
+            {
+                guardian.Atacar(jugador, true);
+                Console.WriteLine($"Jugador tiene {jugador.Vida} vidas");
+                Console.WriteLine($"El jugador esta vivo?: {!jugador.EstaMuerto()}");
+            }
+        }
 
+        static void ProbarObjetos()
+        {
+            Console.WriteLine("--- Objetos ---");
+            Jugador jugador = new Jugador(10, 0);
 
+            new Moneda(10, 0).Recoger(jugador);
+            Console.WriteLine($"Puntaje tras la moneda: {jugador.Puntaje}");
+
+            
+
+            Trampa trampa = new Trampa(10, 0, 1);
+            Console.WriteLine($"Trampa activada: {trampa.Activar(jugador)}  Vidas: {jugador.Vida}");
+
+            Puerta puerta = new Puerta(50, 0);
+            Console.WriteLine($"Puerta abierta sin llave: {puerta.Abrir(jugador)}");
+            new Llave(20, 0).Recoger(jugador);
+            Console.WriteLine($"Puerta abierta con llave: {puerta.Abrir(jugador)}");
+
+            PuntoControl punto = new PuntoControl(0, 0);
+            Console.WriteLine($"Punto de control activo: {punto.Activar(jugador)}");
         }
 
         // Avanza el salto fotograma a fotograma hasta que el jugador aterriza.
@@ -78,7 +108,7 @@ namespace PixelEscape
                 fotograma++;
                 if (fotograma % 5 == 0 || jugador.EnElSuelo)
                 {
-                    Console.WriteLine($"fotograma {fotograma}: {jugador.Ubicacion}  VelY: {jugador.VelY:0.00}");
+                    Console.WriteLine($"fotograma {fotograma}: {Pos(jugador)}  VelY: {jugador.VelY:0.00}");
                 }
             }
             Console.WriteLine($"En el suelo: {jugador.EnElSuelo}");

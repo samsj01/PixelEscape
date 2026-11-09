@@ -1,28 +1,16 @@
-﻿using System;
-
 namespace PixelEscape
 {
-    
-
+    // Lugar al que regresa el jugador tras perder una vida.
     internal class PuntoControl : ObjetoActivable
     {
-
-        // Propiedad que indica si el punto de control está activo
-
-        // Constructor
-        public PuntoControl(int posicionX, int posicionY)
+        public PuntoControl(int x, int y) : base(x, y)
         {
-            this.X = posicionX;
-            this.Y = posicionY;
-            Activo = false;
         }
 
-        // Activa el punto de control
-        public override bool Activar(Jugador escapist)
+        public override bool Activar(Jugador jugador)
         {
             Activo = true;
             return Activo;
         }
     }
-
 }

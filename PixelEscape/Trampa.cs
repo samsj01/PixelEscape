@@ -1,35 +1,24 @@
-using System;
 namespace PixelEscape
 {
-
-
-    internal abstract class Trampa : ObjetoActivable
+    // Clase concreta (no abstracta): se pueden crear trampas con new Trampa(...).
+    // Causa daño al jugador cuando está en su misma posición X.
+    internal class Trampa : ObjetoActivable
     {
-        // Atributos privados
-        private int dano;
-        public int Dano { get => dano;}
+        public int Dano { get; }
 
-        // Constructor
-        public Trampa(int posicionX, int posicionY, int dano)
+        public Trampa(int x, int y, int dano) : base(x, y)
         {
-            this.X = posicionX;
-            this.Y = posicionY;
-            this.dano = dano;
-            Activo = false;
+            Dano = dano;
         }
 
-       // Trampa Activa
-        public override bool Activar(Jugador escapista)
+        public override bool Activar(Jugador jugador)
         {
-            if (escapista.X == this.X)
+            Activo = jugador.X == X;
+            if (Activo)
             {
-                Activo = true;
-                escapista.RecibirDano(Dano);
-                return Activo;
-                
+                jugador.RecibirDano(Dano);
             }
             return Activo;
-    
         }
     }
 }

@@ -1,26 +1,17 @@
-﻿using System;
-
 namespace PixelEscape
 {
-    // Ahora es un ElementoGrafico: reutiliza posición, tamaño y GetBounds()
-    // en lugar de duplicarlos (DRY/LSP).
-    internal class Obstaculo : ElementoGrafico
+    // Bloquea el paso del jugador.
+    internal class Obstaculo
     {
-        // Atributos privados
-        private string tipo;
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public string Tipo { get; }
 
-        public int PosicionX { get => X; set => SetPos(value, Y); }
-        public int PosicionY { get => Y; set => SetPos(X, value); }
-        public string Tipo { get => tipo; set => tipo = value; }
-
-
-        // Constructor
-        public Obstaculo(int posicionX, int posicionY, int ancho, int alto, string tipo) 
-            : base(posicionX, posicionY, ancho, alto, null)
+        public Obstaculo(int x, int y, string tipo)
         {
+            X = x;
+            Y = y;
             Tipo = tipo;
         }
-
-        
     }
 }

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PixelEscape
 {
+    // Le da al jugador la llave que abre la puerta de salida.
     internal class Llave : Coleccionables
     {
         public Llave(int x, int y) : base(x, y)
         {
         }
 
-        // La llave no modifica al jugador: la Puerta consulta su estado Recogido.
         protected override void AplicarEfecto(Jugador jugador)
         {
+            jugador.RecogerLlave();
         }
     }
 }

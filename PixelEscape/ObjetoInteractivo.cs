@@ -1,15 +1,17 @@
-
-
-using System;
-
-namespace PixelEscape 
+namespace PixelEscape
 {
-
-    internal abstract class ObjetoInteractivo : ElementoGrafico
+    // Base de los objetos del escenario con los que el jugador interactúa.
+    internal abstract class ObjetoInteractivo
     {
-        protected bool colision = false;
-        private bool activo;
+        public int X { get; protected set; }
+        public int Y { get; protected set; }
+        public bool Activo { get; protected set; }
 
-        protected bool Activo { get => activo; set => activo = value; }
+        protected ObjetoInteractivo(int x, int y)
+        {
+            X = x;
+            Y = y;
+            Activo = false;
+        }
     }
 }

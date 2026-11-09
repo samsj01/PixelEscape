@@ -1,55 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace PixelEscape
 {
+    // Enemigo del Nivel 2: más rápido que el Guardián y solo ataca dentro de su rango.
     internal class CazadorPixel : Personaje
     {
+        const int VelocidadCazador = 3;
         const double RangoPorDefecto = 50;
-        double rangoDeteccion;
-        public double RangoDeteccion
+
+        public double RangoDeteccion { get; private set; } = RangoPorDefecto;
+
+        public CazadorPixel(int x, int y) : base(x, y)
         {
-            get => rangoDeteccion;
-            private set => rangoDeteccion = value;
+            Velocidad = VelocidadCazador;
+            Dano = 1;
         }
 
-        public CazadorPixel(int x, int y, int w, int h, string nombre) :
-           base(x, y, w, h, nombre)
+        public CazadorPixel() : this(0, 0)
         {
-            this.Vida = 1;
-            this.Velocidad = 2;
-            this.EstaVivo = true;
-            this.dano = 1;
-            this.Direccion = 1;
-            this.RangoDeteccion = RangoPorDefecto;
-        }
-        public CazadorPixel() : base()
-        {
-            this.Velocidad = 3;
-            this.dano = 1;
-            this.RangoDeteccion = RangoPorDefecto;
         }
 
-        bool CalcularDistancia(Personaje objetivo)
+        // true si el objetivo está dentro del rango de detección.
+        public bool Detecta(Personaje objetivo)
         {
-            double deltaX = this.X - objetivo.X;
-            double deltaY = this.Y - objetivo.Y;
-            double distancia = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
-
-            if (distancia <= RangoDeteccion)
-            {
-                return true;
-            }
-            return false;
+            double deltaX = X - objetivo.X;
+            double deltaY = Y - objetivo.Y;
+            return Math.Sqrt(deltaX * deltaX + deltaY * deltaY) <= RangoDeteccion;
         }
 
-        // El Cazador solo ataca si el objetivo está dentro de su rango de detección.
-        protected override bool PuedeAtacar(Personaje objetivo)
+        protected override bool PuedeAtacar(Personaje objetivo, bool colision)
         {
-            return CalcularDistancia(objetivo) && Colision;
+            return colision && Detecta(objetivo);
         }
     }
 }

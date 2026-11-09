@@ -1,122 +1,89 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PixelEscape
 {
-    // Interfaces de rol pequeñas (ISP): cada cliente depende solo de lo que usa.
-    internal interface IMovible
+    // Base de todos los personajes (jugador y enemigos).
+    // Reúne lo que antes estaba repartido en las interfaces IMovible, IDanable e IAtacante.
+    internal abstract class Personaje
     {
-        bool MoverIzq();
-        bool MoverDer();
-    }
+        // ---------- Posición ----------
+        public int X { get; protected set; }
+        public int Y { get; protected set; }
 
-    internal interface IDanable
-    {
-        void RecibirDano(int dano);
-        bool EstaMuerto();
-    }
+        // ---------- Estado ----------
+        public int Vida { get; protected set; } = 1;
+        public int Velocidad { get; set; } = 1;
+        public int Dano { get; protected set; } = 1;
+        public int Direccion { get; protected set; } = 1; // -1 izquierda, 1 derecha
+        public bool EstaVivo => Vida > 0;
 
-    internal interface IAtacante
-    {
-        int Atacar(Personaje objetivo, bool colision);
-    }
-
-    internal abstract class Personaje: ElementoGrafico, IMovible, IDanable, IAtacante
-    {
-        int vida;
-        int velocidad;
-        bool estaVivo;
-        protected int dano;
-        int direccion;
-        bool colision;
-
-
-        
-        public int Vida { get => vida; set => vida = value;}
-        public int Velocidad { get => velocidad; set => velocidad = value; }
-        public bool EstaVivo { get => estaVivo; set => estaVivo = value; }
-        public int Direccion { get => direccion; set => direccion = value; }
-        public bool Colision { get => colision; set => colision = value; }
-
-        public Personaje(int x, int y, int w, int h, string nombre) :
-           base( x, y, w, h, nombre)
+        // ---------- Constructores ----------
+        protected Personaje(int x, int y)
         {
-            this.vida = 1;
-            this.velocidad = 1;
-            this.EstaVivo = true;
-            this.dano = 1;
-            this.Direccion = 1;
-        }
-        public Personaje() 
-        {
-            this.vida = 1;
-            this.velocidad = 1;
-            this.EstaVivo = true;
-            this.dano = 1;
-            this.Direccion = 1;
+            X = x;
+            Y = y;
         }
 
-        // Devuelve true si el personaje se movió. Las subclases pueden restringirlo (OCP/LSP).
+        protected Personaje() : this(0, 0)
+        {
+        }
+
+        // ---------- Movimiento (antes IMovible) ----------
+        public void SetPos(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        // Devuelve true si el personaje se movió. Las subclases pueden restringirlo.
         public virtual bool MoverIzq()
         {
-            this.SetPos(this.X - velocidad, Y);
+            SetPos(X - Velocidad, Y);
             Direccion = -1;
             return true;
         }
 
         public virtual bool MoverDer()
         {
-            this.SetPos(this.X + velocidad, Y);
+            SetPos(X + Velocidad, Y);
             Direccion = 1;
             return true;
         }
 
-
+        // ---------- Vida (antes IDanable) ----------
         public virtual void RecibirDano(int dano)
         {
-            this.Vida -= dano;
-            if(this.Vida < 0)
+            Vida -= dano;
+            if (Vida < 0)
             {
-                this.Vida = 0;
+                Vida = 0;
             }
-            ActualizarEstado();
         }
 
-        // Actualiza EstaVivo según la vida actual.
-        void ActualizarEstado()
+        public void GanarVida(int cantidad)
         {
-            EstaVivo = this.Vida > 0;
+            Vida += cantidad;
         }
 
-        // Devuelve true cuando el personaje ya no tiene vida.
-        public bool EstaMuerto() 
+        public bool EstaMuerto()
         {
-            ActualizarEstado();
             return !EstaVivo;
         }
 
-
-        // Plantilla del ataque: las subclases cambian solo la condición (PuedeAtacar),
-        // sin reescribir el método completo.
-        public virtual int Atacar(Personaje objetivo, bool colision)
+        // ---------- Ataque (antes IAtacante) ----------
+        // Plantilla del ataque: las subclases solo cambian la condición (PuedeAtacar).
+        // Devuelve true si el ataque hizo daño.
+        public bool Atacar(Personaje objetivo, bool colision)
         {
-            this.Colision = colision;
-            if (PuedeAtacar(objetivo)) 
-            { 
-                objetivo.RecibirDano(this.dano);
+            if (!PuedeAtacar(objetivo, colision))
+            {
+                return false;
             }
-            return 0;
+            objetivo.RecibirDano(Dano);
+            return true;
         }
 
-        protected virtual bool PuedeAtacar(Personaje objetivo)
+        protected virtual bool PuedeAtacar(Personaje objetivo, bool colision)
         {
-            return Colision;
+            return colision;
         }
-
-
     }
 }

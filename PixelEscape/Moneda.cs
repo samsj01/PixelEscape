@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PixelEscape
 {
+    // Suma puntos al jugador.
     internal class Moneda : Coleccionables
     {
-        int valor = 100;
-        public int Valor { get => valor; }
-        public Moneda(int x, int y, int valor) : base(x, y)
+        public int Valor { get; }
+
+        public Moneda(int x, int y, int valor = 100) : base(x, y)
         {
-            this.valor = valor;
+            Valor = valor;
         }
+
         protected override void AplicarEfecto(Jugador jugador)
         {
-            jugador.Puntaje += this.valor;
+            jugador.SumarPuntos(Valor);
         }
     }
 }
