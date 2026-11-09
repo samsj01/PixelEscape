@@ -12,7 +12,7 @@
 
 - Samuel Suárez Jaramillo
 - Salomé Garzón Flórez
-- Daniela López Roldán
+- Daniela Roldán Lopera
 
 ---
 
